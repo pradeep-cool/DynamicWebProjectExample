@@ -15,8 +15,12 @@ public class LoginDao {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
 
+        // for AWS
         try (Connection connection = DriverManager
-            .getConnection("jdbc:mysql://127.0.0.1:3307/mysql_database", "root", "root");
+            .getConnection("jdbc:mysql://35.174.0.55:3306/mysql_database", "root", "Root@root1;");
+        		
+        		/*for local computer use 
+        		try (Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/mysql_database", "root", "root");*/
 
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection
@@ -27,7 +31,10 @@ public class LoginDao {
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             status = rs.next();
+            String uname = rs.getString(1);
+            String password = rs.getString(2);
 
+            System.out.println(uname +" "+ password);
         } catch (SQLException e) {
             // process sql exception
             printSQLException(e);
